@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <rect width="800" height="500" fill="#10162B"/>
+  <rect x="0" y="0" width="800" height="36" fill="#151C36"/>
+  <circle cx="18" cy="18" r="5" fill="#F87171"/>
+  <circle cx="34" cy="18" r="5" fill="#C9A24B"/>
+  <circle cx="50" cy="18" r="5" fill="#4ADE80"/>
+  <rect x="80" y="10" width="550" height="16" rx="4" fill="#2A3150"/>
+  <text x="400" y="220" font-family="Georgia, serif" font-size="18" fill="#C9C4B6" text-anchor="middle">RAG Knowledge Bot</text>
+  <text x="400" y="250" font-family="Georgia, serif" font-size="13" fill="#2A3150" text-anchor="middle">[ Add your real screenshot here ]</text>
+  <text x="400" y="275" font-family="monospace" font-size="11" fill="#2A3150" text-anchor="middle">public/projects/rag-knowledge-bot/</text>
+  <circle cx="200" cy="350" r="8" fill="#C9A24B" opacity="0.4"/>
+  <circle cx="400" cy="350" r="8" fill="#5CC8FF" opacity="0.4"/>
+  <circle cx="600" cy="350" r="8" fill="#4ADE80" opacity="0.4"/>
+  <line x1="208" y1="350" x2="392" y2="350" stroke="#2A3150" stroke-width="1.5"/>
+  <line x1="408" y1="350" x2="592" y2="350" stroke="#2A3150" stroke-width="1.5"/>
+</svg>

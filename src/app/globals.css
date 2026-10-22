@@ -1,0 +1,161 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Design tokens — CSS custom properties
+   These are the single source of truth for all colors.
+   Tailwind uses these via its `theme.extend.colors` config.
+───────────────────────────────────────────────────────────────────────────── */
+:root {
+  /* Background layers */
+  --bg: #0b1020;
+  --surface: #10162b;
+  --surface-2: #151c36;
+
+  /* Borders */
+  --border: #2a3150;
+
+  /* Text */
+  --text: #f5f0e6;
+  --muted: #c9c4b6;
+
+  /* Accent — champagne gold */
+  --gold: #c9a24b;
+  --gold-soft: #f3e3b6;
+
+  /* Workflow Theater state colors */
+  --run: #5cc8ff;
+  --ok: #4ade80;
+  --err: #f87171;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Base reset and global styles
+───────────────────────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Prevent horizontal overflow */
+  overflow-x: hidden;
+  /* Font rendering */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Smooth scroll is handled by Lenis; override native when Lenis active */
+html.lenis {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Accessibility: skip-to-content link
+───────────────────────────────────────────────────────────────────────────── */
+.skip-to-content {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  z-index: 9999;
+  padding: 0.5rem 1rem;
+  background: var(--gold);
+  color: #0b1020;
+  font-weight: 600;
+  border-radius: 0 0 8px 8px;
+  transition: top 0.2s;
+}
+
+.skip-to-content:focus {
+  top: 0;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Focus ring — gold, consistent across all interactive elements
+───────────────────────────────────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Selection color
+───────────────────────────────────────────────────────────────────────────── */
+::selection {
+  background-color: rgba(201, 162, 75, 0.25);
+  color: var(--text);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Typography utilities — use sparingly; prefer Tailwind classes
+───────────────────────────────────────────────────────────────────────────── */
+.font-display {
+  font-family: var(--font-playfair), Georgia, serif;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Hairline border utility
+───────────────────────────────────────────────────────────────────────────── */
+.border-hairline {
+  border-color: var(--border);
+  border-width: 1px;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Reduced motion — disable all animations for accessibility
+───────────────────────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Scrollbar styling (Chrome/Edge) — subtle, branded
+───────────────────────────────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gold);
+}
