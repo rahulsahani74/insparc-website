@@ -18,8 +18,12 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  distDir: process.env.INSPARC_BUILD_DIR || ".next",
+  outputFileTracingRoot: process.cwd(),
   poweredByHeader: false,
   devIndicators: false,
+
+  async redirects() { return [{"source":"/services/n8n-workflow-automation","destination":"/services/workflow-automation","permanent":true},{"source":"/services/document-ai","destination":"/services/document-processing","permanent":true},{"source":"/services/api-saas-integrations","destination":"/services/business-coordination","permanent":true},{"source":"/services/rag-knowledge-assistants","destination":"/services/knowledge-assistants","permanent":true},{"source":"/services/custom-automation-consulting","destination":"/services/business-audit","permanent":true},{"source":"/services/analytics-marketing-automation","destination":"/services/marketing-performance","permanent":true},{"source":"/projects/rag-knowledge-bot","destination":"/projects/knowledge-support","permanent":true}]; },
 
   async headers() {
     return [
@@ -27,6 +31,14 @@ const nextConfig: NextConfig = {
         // Apply to all routes
         source: "/(.*)",
         headers: securityHeaders,
+      },
+      {
+        source: "/landing-pages/:path*",
+        headers: [
+          { key: "X-Frame-Options", value: "SAMEORIGIN" },
+          { key: "Content-Security-Policy", value: "frame-ancestors 'self'" },
+          { key: "X-Robots-Tag", value: "noindex" },
+        ],
       },
     ];
   },

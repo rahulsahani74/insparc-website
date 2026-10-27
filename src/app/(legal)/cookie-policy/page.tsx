@@ -3,7 +3,7 @@ import { generateMetadata as buildSeo } from "@/lib/seo";
 
 export const metadata: Metadata = buildSeo({
   title: "Cookie Policy",
-  description: "Information regarding cookie utilization and local storage on Insparc Technology.",
+  description: "Information regarding cookie utilization and local storage on Insparc Technologies.",
   path: "/cookie-policy",
 });
 
@@ -28,7 +28,7 @@ export default function CookiePolicyPage() {
       <section className="space-y-3">
         <h2 className="font-display text-xl text-[var(--text)]">2. How We Use Cookies</h2>
         <p>
-          Insparc Technology prioritizes user privacy. We strictly minimize cookie usage:
+          Insparc Technologies prioritizes user privacy. We strictly minimize cookie usage:
         </p>
         <ul className="list-disc pl-5 space-y-1">
           <li><strong>Essential Cookies:</strong> Used for site navigation, security verification, and remembering banner dismissal.</li>

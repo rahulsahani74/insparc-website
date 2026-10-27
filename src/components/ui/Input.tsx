@@ -43,7 +43,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           className={cn(
             "w-full px-4 py-2.5 rounded-input",
             "bg-[var(--surface-2)] border border-[var(--border)]",
-            "text-[var(--text)] text-sm placeholder:text-[var(--muted)]/60",
+            "text-[var(--text)] text-sm placeholder:text-[var(--muted)]",
             "transition-colors duration-150",
             "focus:outline-none focus:border-[var(--gold)] focus:ring-1 focus:ring-[var(--gold)]/50",
             "disabled:opacity-50 disabled:cursor-not-allowed",

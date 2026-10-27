@@ -46,7 +46,7 @@ export function Accordion({ items, className }: AccordionProps) {
                 "py-5 text-left",
                 "text-[var(--text)] font-medium text-base",
                 "hover:text-[var(--gold)] transition-colors duration-150",
-                "focus-visible:outline-2 focus-visible:outline-[var(--gold)] focus-visible:outline-offset-2 rounded-sm",
+                "focus-visible:outline-2 focus-visible:outline-[var(--gold)] focus-visible:outline-offset-2 rounded-xl",
                 "min-h-[44px]"
               )}
             >

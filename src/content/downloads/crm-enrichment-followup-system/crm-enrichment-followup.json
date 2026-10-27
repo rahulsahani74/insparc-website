@@ -1,0 +1,185 @@
+{
+  "name": "Insparc - Autonomous Lead Research, CRM Enrichment & Email Follow-up",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "lead-form-inbound",
+        "options": {}
+      },
+      "id": "node-form-webhook",
+      "name": "Website Form Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [240, 300],
+      "webhookId": "insparc-lead-form"
+    },
+    {
+      "parameters": {
+        "jsCode": "const body = $input.first().json.body || $input.first().json;\nconst name = body.name || 'Prospect';\nconst email = body.email || '';\nconst company = body.company || '';\nconst notes = body.message || '';\n\n// Extract domain from work email\nlet domain = '';\nif (email.includes('@')) {\n  const parts = email.split('@');\n  const rawDomain = parts[1].toLowerCase();\n  if (!['gmail.com', 'yahoo.com', 'outlook.com', 'hotmail.com'].includes(rawDomain)) {\n    domain = rawDomain;\n  }\n}\n\nreturn [{\n  json: {\n    name,\n    email,\n    company,\n    domain: domain || company.replace(/\\s+/g, '').toLowerCase() + '.com',\n    notes,\n    submittedAt: new Date().toISOString()\n  }\n}];"
+      },
+      "id": "node-extract-domain",
+      "name": "Extract Lead Domain",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "url": "=https://{{ $json.domain }}",
+        "options": {
+          "timeout": 8000,
+          "redirect": {
+            "redirect": {
+              "followRedirects": true
+            }
+          }
+        }
+      },
+      "id": "node-scrape-domain",
+      "name": "Fetch Website Homepage",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [680, 300],
+      "continueOnFail": true
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o",
+        "options": {
+          "temperature": 0.3
+        }
+      },
+      "id": "node-gpt4o",
+      "name": "OpenAI GPT-4o Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [900, 520],
+      "credentials": {
+        "openAiApi": {
+          "id": "insparc_openai_cred",
+          "name": "OpenAI Account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are an executive research analyst and consultative copywriter at Insparc Technology.\nAnalyze this prospect:\n- Name: {{ $('Extract Lead Domain').item.json.name }}\n- Work Email: {{ $('Extract Lead Domain').item.json.email }}\n- Company: {{ $('Extract Lead Domain').item.json.company }}\n- Their Inquiry: {{ $('Extract Lead Domain').item.json.notes }}\n- Homepage HTML Snippet: {{ $json.data ? $json.data.substring(0, 3000) : 'Website not reachable' }}\n\nTasks:\n1. Identify what the company does in 2 sentences.\n2. Identify their likely operational bottlenecks.\n3. Score their enterprise intent from 1 to 10.\n4. Draft a personalized, consultative 3-paragraph reply from 'Insparc Team' addressing their exact bottlenecks.\n\nReturn strictly valid JSON:\n{\n  \"summary\": string,\n  \"industry\": string,\n  \"intent_score\": number,\n  \"personalized_subject\": string,\n  \"personalized_body\": string\n}",
+        "options": {}
+      },
+      "id": "node-ai-researcher",
+      "name": "AI Company Research & Email Drafter",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.6,
+      "position": [900, 300]
+    },
+    {
+      "parameters": {
+        "email": "={{ $('Extract Lead Domain').item.json.email }}",
+        "additionalFields": {
+          "firstName": "={{ $('Extract Lead Domain').item.json.name }}",
+          "companyName": "={{ $('Extract Lead Domain').item.json.company }}",
+          "message": "={{ $json.summary }}\n\nIndustry: {{ $json.industry }}\nIntent Score: {{ $json.intent_score }}"
+        }
+      },
+      "id": "node-hubspot-crm",
+      "name": "Create Contact in HubSpot",
+      "type": "n8n-nodes-base.hubspot",
+      "typeVersion": 2,
+      "position": [1140, 200],
+      "credentials": {
+        "hubspotAppToken": {
+          "id": "insparc_hubspot_cred",
+          "name": "HubSpot Private Token"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fromEmail": "team@insparc.in",
+        "toEmail": "={{ $('Extract Lead Domain').item.json.email }}",
+        "subject": "={{ $json.personalized_subject }}",
+        "text": "={{ $json.personalized_body }}",
+        "options": {}
+      },
+      "id": "node-send-email",
+      "name": "Dispatch Tailored Email (Resend)",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [1380, 300],
+      "credentials": {
+        "smtp": {
+          "id": "insparc_resend_smtp",
+          "name": "Resend SMTP"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Website Form Webhook": {
+      "main": [
+        [
+          {
+            "node": "Extract Lead Domain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Lead Domain": {
+      "main": [
+        [
+          {
+            "node": "Fetch Website Homepage",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Website Homepage": {
+      "main": [
+        [
+          {
+            "node": "AI Company Research & Email Drafter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI GPT-4o Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Company Research & Email Drafter",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Company Research & Email Drafter": {
+      "main": [
+        [
+          {
+            "node": "Create Contact in HubSpot",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Dispatch Tailored Email (Resend)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}
+

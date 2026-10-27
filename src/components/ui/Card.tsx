@@ -12,6 +12,7 @@ interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
 export function Card({ className, tilt = false, ...props }: CardProps) {
   return (
     <div
+      data-reveal
       className={cn(
         "rounded-card bg-[var(--surface)] border border-[var(--border)]",
         "shadow-card",

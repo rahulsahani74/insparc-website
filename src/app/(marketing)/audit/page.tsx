@@ -1,0 +1,7 @@
+import { AuditForm } from "@/components/forms/AuditForm";
+import { generateMetadata } from "@/lib/seo";
+
+export const metadata = generateMetadata({ title: "Business Automation Audit", description: "Map one repetitive task with Insparc Technologies. Prepare a practical automation brief for your priorities, your team and your next step.", path: "/audit" });
+export default function AuditPage() {
+  return <div className="story-shell py-16 sm:py-24"><div className="section-intro"><div><p className="eyebrow">The automation audit</p><h1 className="story-heading mt-5">Before we build,<br /><em>let’s understand.</em></h1></div><p className="section-description">A few considered questions about the work you repeat. You’ll leave with a starting-point brief to discuss with our team.</p></div><div className="grid items-start gap-12 lg:grid-cols-[.7fr_1.3fr]"><aside className="border-t border-[var(--border)] pt-6"><h2 className="font-display text-2xl">What we look for</h2><ul className="mt-5 space-y-5 text-base text-[var(--muted)]"><li>A task that repeats often.</li><li>A handoff between two people or teams.</li><li>A clear place for human review.</li><li>A useful outcome your team can recognise.</li></ul><p className="mt-8 border-t border-[var(--border)] pt-6 text-sm text-[var(--muted)]">This brief is a planning exercise, not an automated security assessment or a confirmed consultation booking.</p></aside><AuditForm /></div></div>;
+}

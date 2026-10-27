@@ -11,7 +11,7 @@ import { generateMetadata as buildSeo } from "@/lib/seo";
 export const metadata: Metadata = buildSeo({
   title: "Frequently Asked Questions — Insparc Automation",
   description:
-    "Common questions about our AI automation services, n8n workflows, WhatsApp business bots, data security, and implementation timelines.",
+    "Common questions about our business services, marketing plans, deliverables and working process.",
   path: "/faq",
 });
 

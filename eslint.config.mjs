@@ -36,11 +36,12 @@ const eslintConfig = [
   {
     ignores: [
       ".next/**",
+      ".next-usability/**",
+      "src/vendor/threeui/**",
+      "artifacts/**",
       "node_modules/**",
       "dist/**",
       "build/**",
-      "*.config.mjs",
-      "*.config.ts",
     ],
   },
 ];

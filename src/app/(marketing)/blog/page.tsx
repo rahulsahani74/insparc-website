@@ -5,43 +5,14 @@ import { Badge } from "@/components/ui/Badge";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { generateMetadata as buildSeo } from "@/lib/seo";
+import { articles } from "@/data/articles";
 
 export const metadata: Metadata = buildSeo({
-  title: "Engineering Blog & Automation Insights",
+  title: "Business Notes & Practical Guides",
   description:
-    "Technical articles and practical guides on n8n architecture, WhatsApp automation, and LLM orchestration.",
+    "Practical notes on customer journeys, business planning and thoughtful service delivery.",
   path: "/blog",
 });
-
-const articles = [
-  {
-    slug: "why-n8n-beats-zapier-for-scaling-businesses",
-    title: "Why We Switched From Zapier to n8n For High-Volume Client Automations",
-    category: "Architecture",
-    readTime: "6 min read",
-    date: "October 2026",
-    excerpt:
-      "When execution volume exceeds 50,000 tasks per month, per-task SaaS pricing destroys margins. Here is how self-hosted n8n delivers 10x cost savings with total data sovereignty.",
-  },
-  {
-    slug: "architecting-whatsapp-ai-bots-that-dont-hallucinate",
-    title: "How to Build WhatsApp AI Bots That Never Hallucinate Customer Pricing",
-    category: "AI & LLMs",
-    readTime: "8 min read",
-    date: "October 2026",
-    excerpt:
-      "A deep dive into system prompt guardrails, temperature control, and deterministic fallback branches when connecting Meta WhatsApp API to GPT-4o.",
-  },
-  {
-    slug: "reclaiming-40-hours-monthly-with-lead-deduplication",
-    title: "The Lead Ingestion Blueprint: Eliminating CRM Duplicates Across Ad Channels",
-    category: "Case Study",
-    readTime: "5 min read",
-    date: "October 2026",
-    excerpt:
-      "How multi-channel real estate agencies use unified n8n webhooks to deduplicate incoming leads, enrich contact records, and trigger instant WhatsApp responses.",
-  },
-];
 
 export default function BlogPage() {
   return (
@@ -53,11 +24,11 @@ export default function BlogPage() {
             Technical Insights
           </Badge>
           <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl text-[var(--text)] tracking-tight mb-5">
-            Automation <span className="text-[var(--gold)]">Engineering Blog.</span>
+            Automation <span className="text-[var(--gold)]">Business Notes.</span>
           </h1>
           <p className="text-[var(--muted)] text-base sm:text-lg leading-relaxed">
-            Practical playbooks, architectural post-mortems, and deployment guides from the
-            engineers building custom n8n and AI systems.
+            Practical planning notes and customer journey ideas from the
+            teams improving customer journeys and everyday business processes.
           </p>
         </div>
 
@@ -70,10 +41,10 @@ export default function BlogPage() {
             >
               <div>
                 <div className="flex items-center justify-between gap-2 mb-4">
-                  <Badge variant="gold" className="text-[10px]">
+                  <Badge variant="gold" className="text-xs">
                     {post.category}
                   </Badge>
-                  <div className="flex items-center gap-1 text-[11px] font-mono text-[var(--muted)]/60">
+                  <div className="flex items-center gap-1 text-xs font-mono text-[var(--muted)]">
                     <Clock className="w-3 h-3" />
                     <span>{post.readTime}</span>
                   </div>
@@ -88,15 +59,15 @@ export default function BlogPage() {
               </div>
 
               <div className="pt-4 border-t border-[var(--border)]/60 flex items-center justify-between">
-                <span className="text-[11px] font-mono text-[var(--muted)]/60 flex items-center gap-1">
+                <span className="text-xs font-mono text-[var(--muted)] flex items-center gap-1">
                   <Calendar className="w-3 h-3" />
                   <span>{post.date}</span>
                 </span>
                 <Link
-                  href="/contact?interest=Discuss+Article+Blueprint"
+                  href={`/blog/${post.slug}`}
                   className="inline-flex items-center gap-1 text-xs font-semibold text-[var(--gold)] hover:text-[var(--gold-soft)]"
                 >
-                  <span>Read Notes</span>
+                  <span>Read article</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
@@ -111,7 +82,7 @@ export default function BlogPage() {
             Want A Specific Workflow Analyzed?
           </h3>
           <p className="text-xs sm:text-sm text-[var(--muted)] mb-6 leading-relaxed">
-            Suggest an automation problem or app stack for our next engineering teardown.
+            Tell us which customer journey or business challenge you would like us to explore.
           </p>
           <Button size="md" variant="primary" asChild>
             <Link href="/contact" className="gap-2">

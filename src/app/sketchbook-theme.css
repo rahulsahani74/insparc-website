@@ -1,0 +1,88 @@
+@font-face { font-family: "Instrument Serif"; src: url("/landing-pages/meng-to-sketchbook/instrument-serif.woff2") format("woff2"); font-style: normal; font-weight: 400; font-display: swap; }
+@font-face { font-family: "Instrument Serif"; src: url("/landing-pages/meng-to-sketchbook/instrument-serif-italic.woff2") format("woff2"); font-style: italic; font-weight: 400; font-display: swap; }
+@font-face { font-family: "Newsreader"; src: url("/landing-pages/meng-to-sketchbook/newsreader.woff2") format("woff2"); font-style: normal; font-weight: 200 600; font-display: swap; }
+
+:root {
+  --bg: #ece7dc; --surface: #f8f4eb; --surface-2: #e5ded0; --border: #c9beac;
+  --text: #2b2721; --muted: #5d564c; --gold: #795337; --gold-soft: #573c29;
+  --run: #326370; --ok: #426141; --err: #a63f36;
+  --font-inter: "Newsreader", Georgia, serif; --font-playfair: "Instrument Serif", Georgia, serif;
+  --type-caption: 1rem; --type-small: 1.125rem;
+  --radius-card: 8px; --radius-control: 4px; --radius-pill: 4px;
+  --story-shadow: 0 12px 36px rgb(68 51 29 / 8%);
+}
+body { font-size: 20px; line-height: 1.7; font-weight: 400; background-image: linear-gradient(rgb(236 231 220 / 89%), rgb(236 231 220 / 95%)), url("/landing-pages/meng-to-sketchbook/bg-wash.jpg"); background-attachment: fixed; background-size: cover; }
+h1,h2,h3,.font-display { font-weight: 400; }
+p { text-wrap: pretty; }
+.story-shell { width: min(100% - 48px, 1200px); }
+.eyebrow { font-size: 16px; line-height: 1.5; letter-spacing: .06em; color: var(--muted); }
+.story-heading { font-size: clamp(40px, 4.5vw, 66px); line-height: 1.1; letter-spacing: -.025em; }
+.story-heading em,.hero-title em { color: var(--gold); }
+.story-button { font-size: 18px; line-height: 1.4; font-weight: 400; min-height: 52px; padding: 13px 24px; border-radius: 4px; color: var(--surface); box-shadow: none; }
+.story-button:hover { color: var(--surface); }
+.story-button-secondary { color: var(--text); background: transparent; }
+.story-button-secondary:hover { color: var(--text); background: var(--surface); }
+.choice-control { font-size: 18px; font-weight: 400; min-height: 48px; border-radius: 4px; background: rgb(248 244 235 / 45%); }
+.choice-control.is-active { color: var(--surface); }
+.section-description { font-size: 20px; max-width: 420px; }
+.explore-link { font-size: 18px; text-decoration-color: var(--border); }
+.scene-caption { font-family: var(--font-inter); font-size: 16px; letter-spacing: .02em; }
+.brand-symbol { display: none; }
+.brand-name { font-family: var(--font-playfair); font-size: 32px; line-height: .95; letter-spacing: -.02em; }
+.brand-name small { display: block; font-family: var(--font-inter); font-size: 15px; line-height: 1.4; letter-spacing: .12em; margin-top: 4px; }
+.nav-contact { font-size: 18px; }
+.workflow-theater { box-shadow: none; border-radius: 8px; background: var(--surface); }
+.workflow-theater .workflow-canvas { background-image: radial-gradient(var(--border) .8px, transparent .8px); }
+.workflow-theater .font-mono { font-family: var(--font-inter); }
+.workflow-theater .workflow-log { background: var(--surface); }
+.workflow-theater .workflow-log p, .workflow-theater .workflow-log span { line-height: 1.55; }
+.workflow-theater .playback-toolbar { padding: 24px; }
+.workflow-theater .playback-actions .story-button { font-size: 18px; min-height: 52px; }
+.workflow-theater .shadow-inner { box-shadow: none; }
+.workflow-theater .shadow-md { box-shadow: 0 3px 7px rgb(68 51 29 / 6%); }
+.hero-grid,.story-hero::before { display: none; }
+.capability-card,.template-card,.project-story-card { box-shadow: none; }
+.capability-card:hover,.template-card:hover,.project-story-card:hover { background: var(--surface); }
+.closing-panel { background: var(--surface); }
+.closing-orbit { display: none; }
+.shadow-2xl { box-shadow: var(--story-shadow); }
+
+.sketch-hero { position: relative; text-align: center; padding: 56px 0 0; }
+.sketch-hero h1 { font-family: var(--font-playfair); font-size: clamp(56px, 7vw, 104px); line-height: .98; letter-spacing: -.035em; margin: 22px auto 0; max-width: 900px; }
+.sketch-hero h1 em { color: var(--gold); font-weight: 400; }
+.sketch-hero .hero-note { font-size: 22px; line-height: 1.65; max-width: 680px; margin: 28px auto 0; color: var(--muted); }
+.sketch-hero-actions { display: flex; justify-content: center; flex-wrap: wrap; align-items: center; gap: 20px; margin-top: 28px; }
+.sketch-hero .edition { display: flex; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 14px; font-size: 16px; color: var(--muted); }
+.workflow-sketchbook { width: min(100%, 1140px); height: 650px; margin: 22px auto 0; }
+.workflow-sketchbook .landing-page-frame { width: 100%; height: 100%; background: var(--bg) !important; }
+.workflow-sketchbook iframe { background: var(--bg) !important; }
+.sketch-intro { display: grid; grid-template-columns: .85fr 1.15fr; gap: 64px; border-top: 1px solid var(--border); padding-top: 56px; }
+.sketch-intro p { font-size: 22px; color: var(--muted); }
+.sketch-index { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-top: 44px; }
+.sketch-index a { border-top: 1px solid var(--border); padding-top: 20px; }
+.sketch-index h3 { font-family: var(--font-playfair); font-size: 34px; line-height: 1.2; margin-top: 14px; }
+.sketch-index p { font-size: 20px; margin-top: 12px; color: var(--muted); }
+.paper-figure { display: block; width: 100%; aspect-ratio: 1200 / 760; border: 1px solid var(--border); border-radius: 3px; background: #eee8dc; object-fit: cover; }
+.project-catalog { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 56px 32px; }
+.project-catalog h3 { font-family: var(--font-playfair); font-size: 36px; line-height: 1.2; }
+.project-catalog .project-summary { font-size: 20px; color: var(--muted); line-height: 1.7; margin-top: 14px; }
+.project-catalog .project-tools { font-size: 16px; color: var(--muted); margin-block: 18px; }
+.paper-caption { font-size: 16px; color: var(--muted); margin-top: 12px; }
+.audit-band { display: grid; grid-template-columns: 1.2fr .8fr; align-items: center; gap: 40px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding-block: 48px; }
+.audit-form { display: grid; gap: 24px; }
+.audit-form fieldset { padding: 0; border: 0; }
+.audit-form legend { font-size: 22px; margin-bottom: 14px; }
+.audit-options { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+.audit-option { display: flex; align-items: flex-start; gap: 12px; font-size: 18px; padding: 16px; background: var(--surface); border: 1px solid var(--border); cursor: pointer; }
+.audit-option input { margin-top: 6px; accent-color: var(--gold); width: 18px; height: 18px; }
+.audit-brief { padding: 28px; border: 1px solid var(--border); background: var(--surface); }
+.audit-brief p,.audit-brief li { font-size: 20px; }
+.audit-brief ul { padding-left: 24px; list-style: disc; }
+@media (max-width: 1023px) { .workflow-sketchbook { height: 610px; }.sketch-intro { gap: 32px; }.audit-band { grid-template-columns: 1fr; } }
+@media (max-width: 767px) { .story-shell { width: min(100% - 40px,1200px); }.sketch-hero { padding-top: 36px; }.sketch-hero .hero-note { font-size: 20px; }.sketch-hero .edition { font-size: 16px; gap: 16px; }.workflow-sketchbook { height: 450px; margin-top: 20px; }.sketch-intro,.sketch-index,.project-catalog { grid-template-columns: 1fr; }.sketch-intro { padding-top: 36px; }.sketch-index { gap: 28px; }.project-catalog { gap: 40px; }.audit-options { grid-template-columns: 1fr; }.workflow-theater .playback-toolbar { padding: 20px 16px; }.section-intro { gap: 24px; } }
+@media (max-width: 479px) { .workflow-sketchbook { height: 420px; }.sketch-hero-actions { gap: 16px; }.brand-name { font-size: 28px; }.brand-name small { font-size: 14px; }.story-button { width: auto; }.sketch-hero-actions .story-button { width: 100%; }.workflow-theater .choice-control { width: 100%; }.workflow-theater [aria-label="Choose a simulation scenario"] { display: grid; width: 100%; }.workflow-theater .playback-actions { gap: 14px; }.workflow-theater .playback-actions .story-button { padding-inline: 14px; } }
+.nav-contact { display: none; }
+@media (min-width: 1280px) { .nav-contact { display: inline-flex; } }
+
+/* Service journal and a drawn-ink footer, in the same paper palette. */
+.process-journal,.marketing-services,.marketing-roadmap{display:grid;gap:2rem;grid-template-columns:repeat(2,minmax(0,1fr))}.process-journal article,.marketing-services article,.marketing-roadmap article{padding:1.8rem 0;border-top:1px solid var(--border)}.marketing-roadmap{grid-template-columns:repeat(3,minmax(0,1fr))}.marketing-note{padding:2rem;border-left:2px solid var(--gold);background:var(--surface)}.marketing-deliverables{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.5rem}.marketing-deliverables>div{padding-bottom:1rem;border-bottom:1px solid var(--border)}.marketing-workflow{display:grid;gap:0;list-style:none;padding:0}.marketing-workflow li{display:grid;grid-template-columns:3rem 1fr;gap:1rem;padding:1.4rem 0;border-bottom:1px solid var(--border)}.footer-ink{max-width:1000px;margin:1rem 0 3rem}.footer-ink svg{width:100%;height:auto;overflow:visible}.footer-ink path{stroke:var(--gold);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}.footer-ink text{fill:var(--muted);font-family:var(--font-instrument),Georgia,serif;font-size:32px;font-style:italic}.ink-trail{stroke-dasharray:1200;stroke-dashoffset:1200}.ink-arrow,.ink-dot{opacity:0}.ink-dot{fill:var(--gold)}.is-visible .ink-trail{animation:footer-draw 2s ease-out forwards}.is-visible .ink-arrow,.is-visible .ink-dot{animation:footer-mark .8s 1.5s ease-out forwards}@keyframes footer-draw{to{stroke-dashoffset:0}}@keyframes footer-mark{to{opacity:1}}@media(max-width:640px){.process-journal,.marketing-services,.marketing-roadmap{grid-template-columns:1fr;gap:1rem}.marketing-note{padding:1.4rem}.footer-ink text{font-size:44px}.marketing-deliverables{gap:1rem}}@media(prefers-reduced-motion:reduce){.footer-ink *{animation:none!important}.footer-ink .ink-trail{stroke-dashoffset:0}.footer-ink .ink-arrow,.footer-ink .ink-dot{opacity:1}}

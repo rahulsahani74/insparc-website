@@ -26,9 +26,9 @@ export function generateMetadata({
   const pageUrl = `${siteConfig.url}${path}`;
 
   return {
-    title: pageTitle,
+    title: title ?? siteConfig.name,
     description: pageDescription,
-    metadataBase: new URL(siteConfig.url === "[YOUR_DOMAIN_URL]" ? "http://localhost:3000" : siteConfig.url),
+    metadataBase: new URL(siteConfig.url || "http://localhost:3000"),
     openGraph: {
       title: pageTitle,
       description: pageDescription,
@@ -46,7 +46,7 @@ export function generateMetadata({
       creator: siteConfig.twitterHandle,
     },
     robots: noIndex
-      ? { index: false, follow: false }
+      ? { index: false, follow: true }
       : { index: true, follow: true },
     alternates: {
       canonical: pageUrl,

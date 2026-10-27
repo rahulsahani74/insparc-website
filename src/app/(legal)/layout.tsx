@@ -16,7 +16,7 @@ export default function LegalLayout({
             <p className="text-xs font-semibold text-[var(--text)]">
               Draft Legal Document — Professional Review Required
             </p>
-            <p className="text-[11px] text-[var(--muted)] mt-0.5">
+            <p className="text-xs text-[var(--muted)] mt-0.5">
               This document is drafted for startup launch preview. Have a qualified attorney review
               and update `[COMPANY LEGAL NAME]`, `[ADDRESS]`, and governing jurisdiction prior to commercial deployment.
             </p>

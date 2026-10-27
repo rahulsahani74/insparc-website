@@ -17,7 +17,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 const variantClasses: Record<ButtonVariant, string> = {
   // Primary: gold background, deep-navy text
   primary:
-    "bg-[var(--gold)] text-[#0B1020] font-semibold hover:bg-[var(--gold-soft)] active:translate-y-0.5 shadow-sm",
+    "bg-[var(--gold)] text-[var(--surface)] font-medium hover:bg-[var(--gold-soft)] active:translate-y-0.5 shadow-sm",
   // Secondary: gold outline, no fill
   secondary:
     "border border-[var(--gold)] text-[var(--gold)] bg-transparent hover:bg-[var(--gold)]/10 active:translate-y-0.5",

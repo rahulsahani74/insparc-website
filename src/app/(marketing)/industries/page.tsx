@@ -35,8 +35,8 @@ export default function IndustriesPage() {
             Automation Tailored To <span className="text-[var(--gold)]">Your Industry.</span>
           </h1>
           <p className="text-[var(--muted)] text-base sm:text-lg leading-relaxed">
-            Every sector faces distinct operational friction. Explore our battle-tested
-            n8n and AI blueprints designed for your exact business model.
+            Every business has different needs. Explore our
+            practical services shaped around your customers and everyday business needs.
           </p>
         </div>
 
@@ -64,7 +64,7 @@ export default function IndustriesPage() {
                   </p>
 
                   <div className="space-y-2 mb-8">
-                    <p className="text-xs font-mono text-[var(--muted)]/60 uppercase">
+                    <p className="text-xs font-mono text-[var(--muted)] uppercase">
                       Core Automations Delivered:
                     </p>
                     <ul className="space-y-1.5 text-xs text-[var(--text)]" role="list">

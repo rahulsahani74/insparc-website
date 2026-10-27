@@ -23,7 +23,7 @@ export default function AccessibilityPage() {
       <section className="space-y-3">
         <h2 className="font-display text-xl text-[var(--text)]">1. Our Commitment</h2>
         <p>
-          Insparc Technology is committed to ensuring digital accessibility for people with disabilities.
+          Insparc Technologies is committed to ensuring digital accessibility for people with disabilities.
           We continually optimize the user experience for everyone and apply the relevant accessibility standards.
         </p>
       </section>

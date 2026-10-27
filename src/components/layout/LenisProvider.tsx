@@ -17,7 +17,8 @@ export function LenisProvider({ children }: { children: React.ReactNode }) {
     if (reducedMotion) return;
 
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: 0.9,
+      anchors: { offset: -100 },
       easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: "vertical",
       smoothWheel: true,
@@ -32,8 +33,15 @@ export function LenisProvider({ children }: { children: React.ReactNode }) {
 
     rafId = requestAnimationFrame(raf);
 
+    const lockScroll = (event: Event) => {
+      if ((event as CustomEvent<boolean>).detail) lenis.stop();
+      else lenis.start();
+    };
+    window.addEventListener("insparc:scroll-lock", lockScroll);
+
     return () => {
       cancelAnimationFrame(rafId);
+      window.removeEventListener("insparc:scroll-lock", lockScroll);
       lenis.destroy();
     };
   }, [reducedMotion]);

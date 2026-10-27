@@ -1,5 +1,9 @@
 # Design System
 
+## Current owner-directed theme — 2026-10-26
+
+The supplied ThreeUI Meng To sketchbook theme supersedes the historical palette/font choices below. Use `src/app/sketchbook-theme.css`: paper `#ece7dc`, ink `#2b2721`, brown accent `#795337`, Instrument Serif headings and Newsreader body text. Body copy is 20px; supporting copy 16–18px. Full name: **Insparc Technologies**. Source/rendering provenance and the deliberate content adaptations are documented in `sketchbook-redesign.md`.
+
 ## 1. Personality
 Classic, trustworthy, premium, intelligent. "Old-world elegance meets AI." Calm confidence, lots of space, thin lines, a few striking 3D and live-motion moments. Not noisy, not generic template.
 

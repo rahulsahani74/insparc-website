@@ -1,0 +1,126 @@
+{
+  "name": "Insparc - Autonomous RAG Support Knowledge Agent",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "rag-chat-query",
+        "options": {}
+      },
+      "id": "node-query-trigger",
+      "name": "Chat Query Inbound",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [240, 300],
+      "webhookId": "rag-query-hook"
+    },
+    {
+      "parameters": {
+        "model": "text-embedding-3-small"
+      },
+      "id": "node-embeddings",
+      "name": "OpenAI Embeddings",
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1,
+      "position": [560, 500],
+      "credentials": {
+        "openAiApi": {
+          "id": "insparc_openai_cred",
+          "name": "OpenAI Account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "qdrantCollection": "insparc_knowledge_base",
+        "topK": 4
+      },
+      "id": "node-qdrant-vector",
+      "name": "Qdrant Vector Store",
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
+      "typeVersion": 1,
+      "position": [560, 300],
+      "credentials": {
+        "qdrantApi": {
+          "id": "insparc_qdrant_cred",
+          "name": "Qdrant Cloud"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are an internal expert support agent for Insparc Technology.\nQuestion: {{ $('Chat Query Inbound').item.json.body.message || $('Chat Query Inbound').item.json.body.query }}\n\nRelevant Knowledge Base Chunks:\n{{ $json.text }}\n\nGuardrails:\n1. Answer the question accurately using ONLY the provided Knowledge Base chunks.\n2. Cite the exact document title and section for each fact.\n3. If the answer cannot be verified from the chunks, state: \"I do not have sufficient information in our verified documentation to answer this accurately. I am escalating this to our technical support team.\"",
+        "options": {
+          "systemMessage": "You never hallucinate facts, pricing, or technical specifications."
+        }
+      },
+      "id": "node-rag-llm",
+      "name": "RAG Grounded Reasoning Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.6,
+      "position": [840, 300]
+    },
+    {
+      "parameters": {
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "node-respond-chat",
+      "name": "Deliver Answer Payload",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [1080, 300]
+    }
+  ],
+  "connections": {
+    "Chat Query Inbound": {
+      "main": [
+        [
+          {
+            "node": "Qdrant Vector Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Embeddings": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Qdrant Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Qdrant Vector Store": {
+      "main": [
+        [
+          {
+            "node": "RAG Grounded Reasoning Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RAG Grounded Reasoning Agent": {
+      "main": [
+        [
+          {
+            "node": "Deliver Answer Payload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}
+

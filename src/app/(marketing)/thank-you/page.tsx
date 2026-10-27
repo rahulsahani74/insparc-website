@@ -26,7 +26,7 @@ export default function ThankYouPage() {
           Audit Request Received.
         </h1>
         <p className="text-[var(--muted)] text-base sm:text-lg leading-relaxed mb-10">
-          Thank you for reaching out to Insparc Technology. Our automation team has received your
+          Thank you for reaching out to Insparc Technologies. Our automation team has received your
           workflow notes and will begin reviewing your requirements.
         </p>
 
@@ -41,7 +41,7 @@ export default function ThankYouPage() {
               <span className="font-mono text-[var(--gold)] font-bold">01.</span>
               <span>
                 <strong>System Assessment (Under 24h):</strong> An architect analyzes the
-                feasibility of connecting your tools (WhatsApp, CRM, Sheets) via n8n.
+                your goals, agreed scope and the responsibilities involved.
               </span>
             </li>
             <li className="flex items-start gap-3">

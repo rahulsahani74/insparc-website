@@ -29,9 +29,14 @@ interface IndustryPageProps {
 
 const industryIconMap: Record<string, LucideIcon> = {
   "clinics-healthcare": Stethoscope,
+  "healthcare-administration": Stethoscope,
   "real-estate": Building2,
   "coaching-education": GraduationCap,
+  "coaches-consultants": GraduationCap,
   "ecommerce-retail": ShoppingBag,
+  "agencies-service-businesses": Building2,
+  "saas-companies": Building2,
+  "small-medium-businesses": Building2,
 };
 
 export async function generateStaticParams() {
@@ -140,10 +145,10 @@ export default async function IndustryDetailPage({ params }: IndustryPageProps) 
         {/* Sample Execution Sequence */}
         <section className="p-8 sm:p-10 rounded-card border border-[var(--border)] bg-[var(--surface-2)] mb-20">
           <h2 className="font-display text-2xl sm:text-3xl text-[var(--text)] mb-2">
-            Recommended Workflow Architecture
+            A Possible Customer Journey
           </h2>
           <p className="text-xs sm:text-sm text-[var(--muted)] mb-8">
-            The sequential execution pipeline configured in your dedicated n8n instance.
+            A possible customer journey, tailored to your team and agreed responsibilities.
           </p>
 
           <div className="space-y-4">
@@ -156,7 +161,7 @@ export default async function IndustryDetailPage({ params }: IndustryPageProps) 
                   {idx + 1}
                 </div>
                 <div className="flex items-center gap-2">
-                  <GitCommit className="w-4 h-4 text-[var(--gold)]/70 shrink-0" />
+                  <GitCommit className="w-4 h-4 text-[var(--gold)] shrink-0" />
                   <p className="text-xs sm:text-sm font-medium text-[var(--text)]">{step}</p>
                 </div>
               </div>
@@ -167,7 +172,7 @@ export default async function IndustryDetailPage({ params }: IndustryPageProps) 
         {/* Bottom CTA Callout */}
         <div className="p-8 sm:p-12 rounded-card bg-[radial-gradient(ellipse_at_top,#151C36_0%,#0B1020_100%)] border border-[var(--gold)]/30 text-center">
           <h3 className="font-display text-3xl sm:text-4xl text-[var(--text)] mb-4">
-            Deploy This Blueprint For Your {industry.name}.
+            Plan This Service For Your {industry.name}.
           </h3>
           <p className="text-[var(--muted)] text-sm sm:text-base max-w-xl mx-auto mb-8">
             We will customize the triggers, database schemas, and message copy to match your exact business rules.

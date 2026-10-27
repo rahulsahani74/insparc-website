@@ -1,157 +1,69 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X } from "lucide-react";
+import { ArrowUpRight, Menu, X } from "lucide-react";
 import { siteConfig } from "@/config/site";
-import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
 
-/**
- * Sticky navigation bar with blur-on-scroll effect.
- * Mobile: full-screen overlay menu with large touch targets.
- * Wordmark logo: Playfair Display text with a gold dot accent.
- */
 export function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
+  const toggle = useRef<HTMLButtonElement>(null);
+  const panel = useRef<HTMLDivElement>(null);
+  const header = useRef<HTMLElement>(null);
+  const isActive = (href: string) => pathname === href || (href !== "/" && pathname.startsWith(`${href}/`));
 
-  // Detect scroll to add blur/border
+  useEffect(() => { setMenuOpen(false); }, [pathname]);
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  // Close mobile menu on route change
-  useEffect(() => {
-    setMenuOpen(false);
-  }, [pathname]);
-
-  // Prevent body scroll when mobile menu is open
-  useEffect(() => {
-    document.body.style.overflow = menuOpen ? "hidden" : "";
+    if (!menuOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    window.dispatchEvent(new CustomEvent("insparc:scroll-lock", { detail: true }));
+    const outside = Array.from(document.querySelectorAll<HTMLElement>("main, footer, [data-announcement], [data-whatsapp-fab]"));
+    const previousInert = outside.map((element) => element.inert);
+    outside.forEach((element) => { element.inert = true; });
+    panel.current?.querySelector<HTMLElement>("a")?.focus();
+    const close = () => { setMenuOpen(false); toggle.current?.focus(); };
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") { event.preventDefault(); close(); }
+      if (event.key !== "Tab") return;
+      const items = Array.from(header.current?.querySelectorAll<HTMLElement>("button, a[href]") ?? []).filter((node) => node.getClientRects().length > 0);
+      const first = items[0]; const last = items[items.length - 1];
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+    };
+    const onResize = () => { if (window.innerWidth >= 1280) setMenuOpen(false); };
+    document.addEventListener("keydown", onKey);
+    window.addEventListener("resize", onResize);
     return () => {
-      document.body.style.overflow = "";
+      document.body.style.overflow = previousOverflow;
+      outside.forEach((element, index) => { element.inert = previousInert[index] ?? false; });
+      window.dispatchEvent(new CustomEvent("insparc:scroll-lock", { detail: false }));
+      document.removeEventListener("keydown", onKey); window.removeEventListener("resize", onResize);
     };
   }, [menuOpen]);
 
   return (
-    <>
-      <header
-        className={cn(
-          "fixed top-0 left-0 right-0 z-40 transition-all duration-300",
-          scrolled
-            ? "bg-[var(--bg)]/90 backdrop-blur-md border-b border-[var(--border)] py-3"
-            : "bg-transparent py-5"
-        )}
-      >
-        <nav
-          className="max-w-container mx-auto px-5 lg:px-8 flex items-center justify-between"
-          aria-label="Main navigation"
-        >
-          {/* Wordmark logo */}
-          <Link
-            href="/"
-            className="flex items-center gap-1 group"
-            aria-label="Insparc Technology — home"
-          >
-            <span className="font-display text-2xl font-semibold text-[var(--text)] tracking-tight">
-              Insparc
-            </span>
-            <span
-              className="w-1.5 h-1.5 rounded-full bg-[var(--gold)] mb-0.5 group-hover:scale-125 transition-transform duration-200"
-              aria-hidden="true"
-            />
-          </Link>
-
-          {/* Desktop nav links */}
-          <ul className="hidden lg:flex items-center gap-1" role="list">
-            {siteConfig.nav.map((item) => {
-              const isActive =
-                pathname === item.href || pathname.startsWith(`${item.href}/`);
-              return (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className={cn(
-                      "px-4 py-2 rounded-pill text-sm font-medium transition-colors duration-150",
-                      isActive
-                        ? "text-[var(--gold)]"
-                        : "text-[var(--muted)] hover:text-[var(--text)]"
-                    )}
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-
-          {/* Desktop CTA */}
-          <div className="hidden lg:block">
-            <Button asChild size="md" variant="primary">
-              <Link href="/contact">Book a Demo</Link>
-            </Button>
-          </div>
-
-          {/* Mobile menu toggle */}
-          <button
-            onClick={() => setMenuOpen((prev) => !prev)}
-            aria-label={menuOpen ? "Close menu" : "Open menu"}
-            aria-expanded={menuOpen}
-            aria-controls="mobile-menu"
-            className="lg:hidden p-2 rounded-lg text-[var(--muted)] hover:text-[var(--text)] hover:bg-[var(--surface-2)] transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
-          >
-            {menuOpen ? (
-              <X className="w-6 h-6" aria-hidden="true" />
-            ) : (
-              <Menu className="w-6 h-6" aria-hidden="true" />
-            )}
-          </button>
-        </nav>
-      </header>
-
-      {/* Mobile full-screen menu */}
-      {menuOpen && (
-        <div
-          id="mobile-menu"
-          role="dialog"
-          aria-label="Navigation menu"
-          aria-modal="true"
-          className="fixed inset-0 z-30 bg-[var(--bg)] pt-20 px-5 flex flex-col lg:hidden"
-        >
-          <ul className="flex flex-col gap-1 mt-4" role="list">
-            {siteConfig.nav.map((item) => {
-              const isActive =
-                pathname === item.href || pathname.startsWith(`${item.href}/`);
-              return (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className={cn(
-                      "flex items-center px-4 py-4 rounded-lg text-xl font-medium transition-colors min-h-[56px]",
-                      isActive
-                        ? "text-[var(--gold)] bg-[var(--surface)]"
-                        : "text-[var(--text)] hover:bg-[var(--surface)]"
-                    )}
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-
-          <div className="mt-auto pb-8">
-            <Button fullWidth size="lg" variant="primary" asChild>
-              <Link href="/contact">Book a Demo</Link>
-            </Button>
-          </div>
-        </div>
-      )}
-    </>
+    <header ref={header} className="sticky top-0 z-[60] border-b border-[var(--border)] bg-[var(--bg)]/95 backdrop-blur-xl">
+      <nav aria-label="Main navigation" className="story-shell flex h-[76px] items-center justify-between gap-6">
+        <Link href="/" onClick={() => setMenuOpen(false)} aria-label={`${siteConfig.name} home`} className="flex items-center gap-3">
+          <span className="brand-symbol" aria-hidden="true"><span /><span /><span /></span>
+          <span className="brand-name">Insparc<small>Technologies</small></span>
+        </Link>
+        <ul className="hidden items-center gap-6 xl:flex">
+          {siteConfig.nav.map((item) => <li key={item.href}><Link href={item.href} aria-current={isActive(item.href) ? "page" : undefined} className={cn("inline-flex min-h-11 items-center text-xs transition-colors hover:text-[var(--gold)]", isActive(item.href) ? "text-[var(--gold)]" : "text-[var(--muted)]")}>{item.label}</Link></li>)}
+        </ul>
+        <Link href="/audit" className="story-button nav-contact">Start an audit <ArrowUpRight className="h-4 w-4" /></Link>
+        <button ref={toggle} aria-expanded={menuOpen} aria-controls="mobile-navigation" aria-label={menuOpen ? "Close navigation" : "Open navigation"} onClick={() => setMenuOpen(!menuOpen)} className="grid h-11 w-11 place-items-center rounded-full border border-[var(--border)] xl:hidden">{menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}</button>
+      </nav>
+      {menuOpen && <div id="mobile-navigation" ref={panel} data-lenis-prevent className="absolute left-0 top-full h-[calc(100dvh-76px)] w-full overflow-y-auto border-b border-[var(--border)] bg-[var(--bg)] px-6 pb-24 pt-6 xl:hidden">
+        <p className="eyebrow mb-5">Explore Insparc</p>
+        <ul>{siteConfig.nav.map((item, index) => <li key={item.href}><Link href={item.href} onClick={() => setMenuOpen(false)} aria-current={isActive(item.href) ? "page" : undefined} className="flex min-h-16 items-center justify-between border-b border-[var(--border)] py-4 font-display text-2xl"><span className="flex items-center gap-5"><span className="font-mono text-xs text-[var(--gold)]">0{index + 1}</span>{item.label}</span><ArrowUpRight className="h-5 w-5 text-[var(--muted)]" /></Link></li>)}</ul>
+        <Link href="/contact" className="story-button mt-8 w-full" onClick={() => setMenuOpen(false)}>Tell us what you’re building <ArrowUpRight className="h-4 w-4" /></Link>
+        <Link href="/contact" onClick={() => setMenuOpen(false)} className="mt-4 flex min-h-11 items-center justify-center text-sm text-[var(--muted)]">Talk to the studio</Link>
+      </div>}
+    </header>
   );
 }

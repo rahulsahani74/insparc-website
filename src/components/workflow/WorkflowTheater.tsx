@@ -52,14 +52,17 @@ export function WorkflowTheater({
     replay,
   } = useWorkflowPlayer(activeScenario, inView);
 
-  const nodeWidth = 150;
-  const nodeHeight = 72;
+  const nodeWidth = 200;
+  const nodeHeight = 152;
+  const displayNodes = activeScenario.nodes.map((node) => ({ ...node, x: node.x * 1.3, y: node.y * 1.4 }));
+  const canvasWidth = Math.max(960, ...displayNodes.map((node) => node.x + nodeWidth + 24));
+  const canvasHeight = Math.max(340, ...displayNodes.map((node) => node.y + nodeHeight + 24));
 
   return (
     <div
       ref={containerRef}
       className={cn(
-        "rounded-card border border-[var(--border)] bg-[var(--surface)] shadow-2xl overflow-hidden flex flex-col",
+        "workflow-theater rounded-card border border-[var(--border)] bg-[var(--surface)] overflow-hidden flex flex-col",
         className
       )}
     >
@@ -82,18 +85,18 @@ export function WorkflowTheater({
         </div>
 
         {/* Center: Scenario Switcher Tabs */}
-        <div className="flex items-center gap-1.5 overflow-x-auto py-1 max-w-full">
+        <div role="group" aria-label="Choose a simulation scenario" className="flex flex-wrap items-center gap-5 py-1 max-w-full">
           {scenarios.map((sc) => {
             const isSelected = sc.id === activeScenario.id;
             return (
               <button
                 key={sc.id}
+                type="button"
+                aria-pressed={isSelected}
                 onClick={() => setActiveScenario(sc)}
                 className={cn(
-                  "px-2.5 py-1 rounded-md text-xs font-medium whitespace-nowrap transition-all duration-150",
-                  isSelected
-                    ? "bg-[var(--gold)] text-[#0B1020] font-semibold shadow-sm"
-                    : "text-[var(--muted)] hover:text-[var(--text)] hover:bg-[var(--surface)]"
+                  "choice-control",
+                  isSelected && "is-active"
                 )}
               >
                 {sc.title}
@@ -103,25 +106,37 @@ export function WorkflowTheater({
         </div>
 
         {/* Right: Simulation Tag */}
-        <Badge variant="gold" className="text-[10px] hidden sm:inline-flex">
+        <Badge variant="gold" className="text-xs hidden sm:inline-flex">
           Demo simulation
         </Badge>
+      </div>
+
+      <div className="playback-toolbar" role="group" aria-label="Simulation playback controls">
+        <span className="text-sm font-medium">Try the workflow</span>
+        <div className="playback-actions">
+          <button type="button" onClick={status === "playing" ? pause : play} aria-label={status === "playing" ? "Pause simulation" : "Play simulation"} className="story-button">
+            {status === "playing" ? <Pause className="h-4 w-4" aria-hidden="true" /> : <Play className="h-4 w-4" aria-hidden="true" />}
+            {status === "playing" ? "Pause" : "Play"}
+          </button>
+          <button type="button" onClick={replay} aria-label="Replay simulation" className="story-button story-button-secondary"><RotateCcw className="h-4 w-4" aria-hidden="true" /> Replay</button>
+          <button type="button" onClick={() => setSpeed(speed === 1 ? 2 : 1)} aria-label={`Toggle playback speed (currently ${speed}x)`} className="story-button story-button-secondary"><FastForward className="h-4 w-4" aria-hidden="true" /> Speed: {speed}×</button>
+        </div>
       </div>
 
       {/* ── Main Interactive Stage: Flow Canvas (Left) + Log Panel (Right) ── */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 flex-1 min-h-[460px]">
         {/* Workflow Diagram Canvas */}
-        <div className="lg:col-span-7 xl:col-span-8 p-4 sm:p-6 relative flex flex-col justify-between overflow-x-auto bg-[radial-gradient(#2A3150_1px,transparent_1px)] [background-size:20px_20px] min-h-[340px]">
+        <div role="region" aria-label="Workflow diagram. Scroll horizontally to explore all steps." tabIndex={0} className="workflow-canvas lg:col-span-7 xl:col-span-8 p-4 sm:p-6 relative flex flex-col justify-between overflow-x-auto [background-size:20px_20px] min-h-[340px]">
           {/* Desktop Visual Stage */}
-          <div className="relative w-[960px] h-[280px] my-auto hidden md:block">
+          <div className="relative my-auto hidden md:block shrink-0" style={{ width: canvasWidth, height: canvasHeight }}>
             {/* SVG Edges and Animated Data Packets */}
             <svg
               className="absolute inset-0 w-full h-full pointer-events-none"
-              viewBox="0 0 960 280"
+              viewBox={`0 0 ${canvasWidth} ${canvasHeight}`}
             >
               {activeScenario.edges.map(([fromId, toId]) => {
-                const fromNode = activeScenario.nodes.find((n) => n.id === fromId);
-                const toNode = activeScenario.nodes.find((n) => n.id === toId);
+                const fromNode = displayNodes.find((n) => n.id === fromId);
+                const toNode = displayNodes.find((n) => n.id === toId);
                 if (!fromNode || !toNode) return null;
 
                 const fromX = fromNode.x + nodeWidth;
@@ -148,7 +163,7 @@ export function WorkflowTheater({
             </svg>
 
             {/* Positioned Node Cards */}
-            {activeScenario.nodes.map((node) => (
+            {displayNodes.map((node) => (
               <div
                 key={node.id}
                 style={{
@@ -184,53 +199,10 @@ export function WorkflowTheater({
             ))}
           </div>
 
-          {/* Player Playback Controls */}
-          <div className="flex items-center justify-between gap-3 pt-4 border-t border-[var(--border)]/60 mt-auto select-none">
-            <div className="flex items-center gap-2">
-              {status === "playing" ? (
-                <button
-                  onClick={pause}
-                  aria-label="Pause simulation"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[var(--border)] bg-[var(--surface-2)] text-xs text-[var(--text)] hover:border-[var(--gold)] transition-colors min-h-[36px]"
-                >
-                  <Pause className="w-3.5 h-3.5" />
-                  <span>Pause</span>
-                </button>
-              ) : (
-                <button
-                  onClick={play}
-                  aria-label="Play simulation"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[var(--gold)]/40 bg-[var(--gold)]/10 text-xs text-[var(--gold)] hover:bg-[var(--gold)]/20 transition-colors min-h-[36px]"
-                >
-                  <Play className="w-3.5 h-3.5 fill-current" />
-                  <span>Play</span>
-                </button>
-              )}
-
-              <button
-                onClick={replay}
-                aria-label="Replay simulation"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[var(--border)] bg-[var(--surface-2)] text-xs text-[var(--muted)] hover:text-[var(--text)] transition-colors min-h-[36px]"
-              >
-                <RotateCcw className="w-3.5 h-3.5" />
-                <span>Replay</span>
-              </button>
-            </div>
-
-            {/* Speed toggle */}
-            <button
-              onClick={() => setSpeed(speed === 1 ? 2 : 1)}
-              aria-label={`Toggle playback speed (currently ${speed}x)`}
-              className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg border border-[var(--border)] bg-[var(--surface-2)] text-xs font-mono text-[var(--muted)] hover:text-[var(--gold)] transition-colors min-h-[36px]"
-            >
-              <FastForward className="w-3.5 h-3.5" />
-              <span>{speed}x</span>
-            </button>
-          </div>
         </div>
 
         {/* Right Column: Execution Log Panel */}
-        <div className="lg:col-span-5 xl:col-span-4 p-4 sm:p-6 bg-[#0B1020]/70 border-t lg:border-t-0 lg:border-l border-[var(--border)] flex flex-col">
+        <div className="workflow-log lg:col-span-5 xl:col-span-4 p-4 sm:p-6 bg-[var(--surface)] border-t lg:border-t-0 lg:border-l border-[var(--border)] flex flex-col">
           <LogPanel
             logs={logs}
             status={status}

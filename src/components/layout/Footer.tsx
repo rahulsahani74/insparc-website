@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { FooterInk } from "./FooterInk";
 import { Phone, Mail, MessageCircle } from "lucide-react";
 import { siteConfig, getWhatsAppUrl } from "@/config/site";
 
@@ -7,30 +8,30 @@ const footerLinks = {
     { label: "About", href: "/about" },
     { label: "Careers", href: "/careers" },
     { label: "Blog", href: "/blog" },
-    { label: "Contact", href: "/contact" },
+    { label: "Contact & Consultation", href: "/contact" },
   ],
-  Services: [
+  "Business Services": [
+    { label: "Workflow Management", href: "/services/workflow-automation" },
     { label: "WhatsApp Automation", href: "/services/whatsapp-automation" },
-    { label: "AI Chatbots", href: "/services/ai-chatbots" },
+    { label: "Customer Enquiries & Support", href: "/services/ai-chatbots" },
     { label: "Lead Automation", href: "/services/lead-automation" },
-    { label: "Voice Agents", href: "/services/voice-agents" },
-    { label: "Document AI", href: "/services/document-ai" },
-    { label: "n8n Workflows", href: "/services/n8n-workflows" },
+    { label: "Business Task Support", href: "/services/custom-ai-agents" },
+    { label: "Document Processing", href: "/services/document-processing" },
   ],
-  Resources: [
-    { label: "Projects", href: "/projects" },
-    { label: "Live Demo", href: "/demo" },
-    { label: "ROI Calculator", href: "/roi-calculator" },
-    { label: "FAQ", href: "/faq" },
-    { label: "Resources", href: "/resources" },
+  "Explore": [
+    { label: "Business Solutions", href: "/products" },
+    { label: "Industry Solutions", href: "/industries" },
+    { label: "Projects & Portfolio", href: "/projects" },
+    { label: "Digital Marketing", href: "/digital-marketing" },
+    { label: "Time Savings Calculator", href: "/roi-calculator" },
+    { label: "Automation Audit", href: "/audit" },
   ],
   Legal: [
     { label: "Privacy Policy", href: "/privacy-policy" },
     { label: "Terms & Conditions", href: "/terms-and-conditions" },
     { label: "Cookie Policy", href: "/cookie-policy" },
-    { label: "Refund Policy", href: "/refund-policy" },
-    { label: "Disclaimer", href: "/disclaimer" },
-    { label: "Security", href: "/security" },
+    { label: "Refund Policy (Digital Goods)", href: "/refund-policy" },
+    { label: "Security & Trust", href: "/security" },
     { label: "Accessibility", href: "/accessibility" },
   ],
 };
@@ -41,17 +42,17 @@ export function Footer() {
   return (
     <footer className="bg-[var(--surface)] border-t border-[var(--border)] mt-auto">
       <div className="max-w-container mx-auto px-5 lg:px-8 py-16">
-        {/* Top: wordmark + contact + link columns */}
+        <p className="font-display text-3xl sm:text-4xl max-w-2xl">Your next chapter,<br/><em>thoughtfully planned.</em></p><FooterInk />
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-10">
           {/* Brand block */}
           <div className="lg:col-span-2">
             <Link
               href="/"
               className="inline-flex items-center gap-1 mb-4"
-              aria-label="Insparc Technology — home"
+              aria-label="Insparc Technologies — home"
             >
               <span className="font-display text-2xl font-semibold text-[var(--text)]">
-                Insparc
+                Insparc Technologies
               </span>
               <span
                 className="w-1.5 h-1.5 rounded-full bg-[var(--gold)] mb-0.5"
@@ -59,8 +60,7 @@ export function Footer() {
               />
             </Link>
             <p className="text-[var(--muted)] text-sm leading-relaxed max-w-xs mb-6">
-              AI automation systems for small and mid-size businesses across India. We build the
-              workflows that work while you sleep.
+              Business operations, customer support and digital marketing. Thoughtfully planned, with your team involved at every important step.
             </p>
 
             {/* Contact block */}
@@ -100,7 +100,7 @@ export function Footer() {
           {/* Link columns */}
           {Object.entries(footerLinks).map(([section, links]) => (
             <div key={section}>
-              <h3 className="text-xs font-semibold uppercase tracking-widest text-[var(--muted)] mb-4">
+              <h3 className="text-sm font-semibold text-[var(--text)] mb-4">
                 {section}
               </h3>
               <ul className="space-y-2.5" role="list">

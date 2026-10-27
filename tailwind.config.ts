@@ -7,6 +7,18 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    fontSize: {
+      xs: ["1rem", { lineHeight: "1.5" }],
+      sm: ["1.125rem", { lineHeight: "1.6" }],
+      base: ["1.25rem", { lineHeight: "1.7" }],
+      lg: ["1.375rem", { lineHeight: "1.6" }],
+      xl: ["1.5rem", { lineHeight: "1.4" }],
+      "2xl": ["1.875rem", { lineHeight: "1.3" }],
+      "3xl": ["2.25rem", { lineHeight: "1.2" }],
+      "4xl": ["3rem", { lineHeight: "1.15" }],
+      "5xl": ["4rem", { lineHeight: "1.1" }],
+      "6xl": ["4.75rem", { lineHeight: "1.05" }],
+    },
     extend: {
       colors: {
         // Design tokens mapped from CSS variables
@@ -46,9 +58,9 @@ const config: Config = {
         container: "1200px",
       },
       borderRadius: {
-        card: "18px",
-        input: "12px",
-        pill: "999px",
+        card: "var(--radius-card)",
+        input: "var(--radius-control)",
+        pill: "var(--radius-pill)",
       },
       boxShadow: {
         card: "0 4px 24px 0 rgba(0,0,0,0.3)",

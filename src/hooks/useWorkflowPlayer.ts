@@ -56,6 +56,9 @@ export function useWorkflowPlayer(scenario: Scenario, inView = true) {
     setStatus("idle");
   }, [scenario]);
 
+  // Reset first so the reduced-motion final state cannot be overwritten on mount.
+  useEffect(() => { reset(); }, [scenario.id, reset]);
+
   // When reduced-motion is requested, jump directly to completed state
   useEffect(() => {
     if (prefersReduced) {
@@ -75,11 +78,6 @@ export function useWorkflowPlayer(scenario: Scenario, inView = true) {
     }
   }, [prefersReduced, scenario]);
 
-  // Reset when scenario changes
-  useEffect(() => {
-    reset();
-  }, [scenario.id, reset]);
-
   // Execute a single step
   const executeStep = useCallback(
     (stepIdx: number) => {
@@ -92,6 +90,7 @@ export function useWorkflowPlayer(scenario: Scenario, inView = true) {
           loopTimerRef.current = setTimeout(() => {
             reset();
             setStatus("playing");
+            executeStep(0);
           }, 2500);
         }
         return;
@@ -143,11 +142,11 @@ export function useWorkflowPlayer(scenario: Scenario, inView = true) {
 
   // Playback control functions
   const play = useCallback(() => {
-    if (status === "playing") return;
+    if (status === "playing" || prefersReduced) return;
     setStatus("playing");
     const nextIdx = currentStepIndex < 0 ? 0 : currentStepIndex;
     executeStep(nextIdx);
-  }, [status, currentStepIndex, executeStep]);
+  }, [status, currentStepIndex, executeStep, prefersReduced]);
 
   const pause = useCallback(() => {
     if (timerRef.current) clearTimeout(timerRef.current);
@@ -156,15 +155,17 @@ export function useWorkflowPlayer(scenario: Scenario, inView = true) {
   }, []);
 
   const replay = useCallback(() => {
+    if (prefersReduced) return;
     reset();
     setStatus("playing");
-    setTimeout(() => {
+    timerRef.current = setTimeout(() => {
       executeStep(0);
     }, 50);
-  }, [reset, executeStep]);
+  }, [reset, executeStep, prefersReduced]);
 
   // Auto-play when scrolled in view
   useEffect(() => {
+    if (!inView && loopTimerRef.current) clearTimeout(loopTimerRef.current);
     if (inView && status === "idle" && !prefersReduced) {
       const delayTimer = setTimeout(() => {
         play();

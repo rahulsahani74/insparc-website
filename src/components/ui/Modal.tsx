@@ -27,13 +27,16 @@ export function Modal({ isOpen, onClose, title, children, className }: ModalProp
       // showModal provides native focus trap and Escape key handling
       if (!dialog.open) dialog.showModal();
       document.body.style.overflow = "hidden";
+      window.dispatchEvent(new CustomEvent("insparc:scroll-lock", { detail: true }));
     } else {
       if (dialog.open) dialog.close();
       document.body.style.overflow = "";
+      window.dispatchEvent(new CustomEvent("insparc:scroll-lock", { detail: false }));
     }
 
     return () => {
       document.body.style.overflow = "";
+      window.dispatchEvent(new CustomEvent("insparc:scroll-lock", { detail: false }));
     };
   }, [isOpen]);
 
@@ -91,7 +94,7 @@ export function Modal({ isOpen, onClose, title, children, className }: ModalProp
         </div>
 
         {/* Body */}
-        <div className="p-6 overflow-y-auto">{children}</div>
+        <div className="p-6 overflow-y-auto" data-lenis-prevent>{children}</div>
       </div>
     </dialog>
   );

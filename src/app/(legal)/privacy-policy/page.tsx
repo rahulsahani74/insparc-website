@@ -23,7 +23,7 @@ export default function PrivacyPolicyPage() {
       <section className="space-y-3">
         <h2 className="font-display text-xl text-[var(--text)]">1. Introduction</h2>
         <p>
-          This Privacy Policy governs the manner in which <strong>[COMPANY LEGAL NAME]</strong> (&quot;Insparc Technology&quot;,
+          This Privacy Policy governs the manner in which <strong>[COMPANY LEGAL NAME]</strong> (&quot;Insparc Technologies&quot;,
           &quot;we&quot;, &quot;our&quot;, or &quot;us&quot;) collects, processes, and protects information gathered from users
           (&quot;you&quot;, &quot;your&quot;) of our website and automation services.
         </p>
@@ -38,7 +38,7 @@ export default function PrivacyPolicyPage() {
         <p>We collect only the minimum information necessary to provide our automation audit and engineering services:</p>
         <ul className="list-disc pl-5 space-y-1">
           <li><strong>Direct Contact Data:</strong> Name, business email, phone number, and company name provided via our contact or demo forms.</li>
-          <li><strong>Workflow Requirements:</strong> Descriptions of your business operational processes, software stack, and task bottlenecks.</li>
+          <li><strong>Workflow Requirements:</strong> Descriptions of your business operational processes, team responsibilities, and task bottlenecks.</li>
           <li><strong>Technical Identifiers:</strong> IP addresses, browser types, and standard access logs collected automatically for security and rate limiting.</li>
         </ul>
       </section>
@@ -46,8 +46,8 @@ export default function PrivacyPolicyPage() {
       <section className="space-y-3">
         <h2 className="font-display text-xl text-[var(--text)]">3. Client Workflow Data Confidentiality</h2>
         <p>
-          When you contract Insparc Technology to architect and deploy n8n workflows, we treat all client
-          credentials, API tokens, database records, and customer communications as strictly confidential under non-disclosure.
+          When you contract Insparc Technologies to deliver business services, we treat all client
+          account access details, business records and customer communications as strictly confidential under non-disclosure.
         </p>
         <p>
           We do not sell, rent, or trade your data or your end-users&apos; data to third-party advertisers or model training companies.

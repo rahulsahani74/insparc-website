@@ -5,6 +5,7 @@ node_modules/
 
 # Build output
 .next/
+.next-usability/
 out/
 build/
 dist/
@@ -42,3 +43,4 @@ yarn-error.log*
 split.py
 project_pack.txt
 path
+artifacts/

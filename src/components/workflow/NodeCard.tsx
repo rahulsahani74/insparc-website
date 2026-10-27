@@ -103,7 +103,7 @@ export function NodeCard({ node, status, className, style }: NodeCardProps) {
       <div className="flex items-center justify-between gap-2 mb-2">
         <div
           className={cn(
-            "p-1.5 rounded-lg border border-[var(--border)] bg-[var(--surface)] text-[var(--muted)] transition-colors",
+            "p-1.5 rounded-xl border border-[var(--border)] bg-[var(--surface)] text-[var(--muted)] transition-colors",
             isRunning && "text-[var(--run)] border-[var(--run)]/50",
             isSuccess && "text-[var(--ok)] border-[var(--ok)]/50"
           )}
@@ -114,19 +114,19 @@ export function NodeCard({ node, status, className, style }: NodeCardProps) {
         {/* Execution indicator */}
         <div className="flex items-center">
           {isRunning && (
-            <span className="flex items-center gap-1 text-[11px] font-mono text-[var(--run)]">
+            <span className="flex items-center gap-1 text-xs font-mono text-[var(--run)]">
               <Loader2 className="w-3.5 h-3.5 animate-spin" />
               <span>running</span>
             </span>
           )}
           {isSuccess && (
-            <span className="flex items-center gap-1 text-[11px] font-mono text-[var(--ok)]">
+            <span className="flex items-center gap-1 text-xs font-mono text-[var(--ok)]">
               <Check className="w-3.5 h-3.5" />
               <span>success</span>
             </span>
           )}
           {isError && (
-            <span className="flex items-center gap-1 text-[11px] font-mono text-[var(--err)]">
+            <span className="flex items-center gap-1 text-xs font-mono text-[var(--err)]">
               <AlertCircle className="w-3.5 h-3.5" />
             </span>
           )}
@@ -138,11 +138,11 @@ export function NodeCard({ node, status, className, style }: NodeCardProps) {
 
       {/* Node Label */}
       <div>
-        <p className="text-xs font-semibold text-[var(--text)] tracking-tight line-clamp-1">
+        <p className="text-xs font-semibold text-[var(--text)] tracking-tight line-clamp-2" title={node.label}>
           {node.label}
         </p>
-        <p className="text-[10px] font-mono text-[var(--muted)]/70 uppercase tracking-wider">
-          {node.kind}
+        <p className="text-xs font-mono text-[var(--muted)]">
+          {{trigger:"Start",ai:"Review",tool:"Step",logic:"Decision",output:"Finish"}[node.kind]}
         </p>
       </div>
     </div>

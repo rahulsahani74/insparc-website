@@ -1,29 +1,5 @@
-import type { Metadata } from "next";
-import { siteConfig } from "@/config/site";
-import { Hero } from "@/components/sections/Hero";
-import { WorkflowTheaterStrip } from "@/components/sections/WorkflowTheaterStrip";
-import { ServicesGrid } from "@/components/sections/ServicesGrid";
-import { ProjectsGrid } from "@/components/sections/ProjectsGrid";
+import { SketchbookHome } from "@/components/sketchbook/SketchbookHome";
+import { generateMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: `${siteConfig.name} — AI Automation That Works While You Sleep`,
-  description: siteConfig.description,
-};
-
-/**
- * Insparc Technology Home Page.
- * - Hero: 3D HeroOrb + Value proposition + CTAs
- * - WorkflowTheaterStrip: Animated interactive n8n simulation
- * - ServicesGrid: 6 core service architectures (bento grid with tilt)
- * - ProjectsGrid: Real n8n projects showcase with browser frames
- */
-export default function HomePage() {
-  return (
-    <>
-      <Hero />
-      <WorkflowTheaterStrip />
-      <ServicesGrid />
-      <ProjectsGrid />
-    </>
-  );
-}
+export const metadata = generateMetadata({ title: "Business Services & Digital Marketing", description: "Insparc Technologies helps with customer enquiries, everyday business operations and digital marketing. Explore our services and clear working process.", path: "/" });
+export default function HomePage() { return <SketchbookHome />; }

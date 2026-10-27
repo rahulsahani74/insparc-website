@@ -16,7 +16,7 @@ import { generateMetadata as buildSeo } from "@/lib/seo";
 export const metadata: Metadata = buildSeo({
   title: "Book a Free Automation Audit & Contact Us",
   description:
-    "Schedule an architecture discovery session with Insparc Technology. Get a customized automation roadmap for your WhatsApp, lead, and workflow systems.",
+    "Discuss customer enquiries, everyday business operations or digital marketing with Insparc Technologies.",
   path: "/contact",
 });
 
@@ -38,14 +38,14 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
         {/* Header */}
         <div className="max-w-3xl mx-auto text-center mb-16 animate-fade-up">
           <Badge variant="gold" className="mb-4 px-3.5 py-1 text-xs">
-            Discovery & Architecture
+            Let us understand your business
           </Badge>
           <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl text-[var(--text)] tracking-tight mb-5">
             Book Your Free <span className="text-[var(--gold)]">Automation Audit.</span>
           </h1>
           <p className="text-[var(--muted)] text-base sm:text-lg leading-relaxed">
             Tell us about the repetitive tasks, manual data transfers, or missed customer inquiries
-            slowing down your team. We will map a working solution in 24 hours.
+            slowing down your team. Let’s find a practical place to start.
           </p>
         </div>
 
@@ -64,7 +64,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                     <MessageCircle className="w-5 h-5" />
                   </div>
                   <div>
-                    <p className="text-xs font-mono text-[var(--muted)]/70 uppercase">
+                    <p className="text-xs font-mono text-[var(--muted)] uppercase">
                       Instant WhatsApp
                     </p>
                     <a
@@ -83,7 +83,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                     <Phone className="w-5 h-5" />
                   </div>
                   <div>
-                    <p className="text-xs font-mono text-[var(--muted)]/70 uppercase">
+                    <p className="text-xs font-mono text-[var(--muted)] uppercase">
                       Phone Call
                     </p>
                     <a
@@ -100,7 +100,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                     <Mail className="w-5 h-5" />
                   </div>
                   <div>
-                    <p className="text-xs font-mono text-[var(--muted)]/70 uppercase">
+                    <p className="text-xs font-mono text-[var(--muted)] uppercase">
                       Email Inquiries
                     </p>
                     <a
@@ -117,7 +117,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                     <MapPin className="w-5 h-5" />
                   </div>
                   <div>
-                    <p className="text-xs font-mono text-[var(--muted)]/70 uppercase">
+                    <p className="text-xs font-mono text-[var(--muted)] uppercase">
                       Operating Location
                     </p>
                     <p className="text-sm text-[var(--text)]">{siteConfig.address}</p>
@@ -130,29 +130,27 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
             <Card className="p-7 bg-[var(--surface-2)] border-[var(--gold)]/30">
               <div className="flex items-center gap-2 text-xs font-mono text-[var(--gold)] uppercase mb-4">
                 <Calendar className="w-4 h-4" />
-                <span>What Happens During Your 30-Min Audit:</span>
+                <span>What we discuss with you:</span>
               </div>
 
               <div className="space-y-3.5 text-xs text-[var(--muted)]">
                 <div className="flex items-start gap-2.5">
                   <CheckCircle2 className="w-4 h-4 text-[var(--ok)] shrink-0 mt-0.5" />
                   <span>
-                    <strong>Process Deconstruction:</strong> We identify high-friction tasks
+                    <strong>Your Priorities:</strong> We identify high-friction tasks
                     draining your team&apos;s hours each week.
                   </span>
                 </div>
                 <div className="flex items-start gap-2.5">
                   <CheckCircle2 className="w-4 h-4 text-[var(--ok)] shrink-0 mt-0.5" />
                   <span>
-                    <strong>Tech Stack Compatibility:</strong> We verify if your existing tools
-                    (WhatsApp, CRM, Gmail, Sheets) can connect seamlessly via n8n.
+                    <strong>Your Working Process:</strong> We review the current steps, responsibilities and where your customers or team need a clearer handoff.
                   </span>
                 </div>
                 <div className="flex items-start gap-2.5">
                   <CheckCircle2 className="w-4 h-4 text-[var(--ok)] shrink-0 mt-0.5" />
                   <span>
-                    <strong>Exact ROI Estimate:</strong> You get a clear projection of hours and
-                    operating capital saved before you commit a single rupee.
+                    <strong>A Practical Next Step:</strong> We discuss a suitable first scope, the people involved and what you should receive.
                   </span>
                 </div>
               </div>
@@ -164,7 +162,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
             <Card className="p-7 sm:p-9 bg-[var(--surface)] border-[var(--border)] shadow-2xl">
               <div className="mb-6">
                 <h2 className="font-display text-2xl text-[var(--text)] mb-2">
-                  Share Your Workflow Requirements
+                  Tell Us What You Need
                 </h2>
                 <p className="text-xs sm:text-sm text-[var(--muted)]">
                   Fill in the details below. We treat all business operational data under strict
